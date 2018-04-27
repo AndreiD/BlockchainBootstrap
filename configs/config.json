@@ -1,0 +1,8 @@
+{
+  "port" : 9090,
+  "hostname" : "localhost",
+  "auth": {
+    "username": "theusername",
+    "password": "thepassword"
+  }
+}
