@@ -16,7 +16,7 @@ var router *gin.Engine
 
 func main() {
 
-	config, err :=  tools.ReadConfig("config", map[string]interface{}{
+	config, err :=  tools.ReadConfig("api_config", map[string]interface{}{
 		"port":     1234,
 		"hostname": "localhost",
 		"auth": map[string]string{
