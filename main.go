@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
-	"./tools"
+	"github.com/AndreiD/BlockchainBootstrap/tools"
 
 )
 
