@@ -14,6 +14,8 @@ import (
 var Blockchain []Block
 var router *gin.Engine
 
+var bcServer chan []Block
+
 func main() {
 
 	config, err :=  tools.ReadConfig("api_config", map[string]interface{}{
@@ -39,6 +41,19 @@ func main() {
 		Blockchain = append(Blockchain, genesisBlock)
 	}()
 
+
+
+	bcServer = make(chan []Block)
+
+	//broadcasting
+	tick := time.NewTicker(10 * time.Second)
+	go func() {
+		for t := range tick.C {
+			fmt.Println("Tick at", t)
+		}
+	}()
+
+
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(config.GetInt("port")),
 		Handler:        router,
@@ -48,5 +63,8 @@ func main() {
 	}
 	server.SetKeepAlivesEnabled(false)
 	server.ListenAndServe()
+
+
+
 
 }

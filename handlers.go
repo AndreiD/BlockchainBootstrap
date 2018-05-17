@@ -22,16 +22,16 @@ func HandleGetBlockchain(c *gin.Context) {
 }
 
 func HandleWriteBlock(c *gin.Context) {
-	var json Message
-	if err := c.MustBindWith(&json, binding.JSON); err == nil {
+	var mess Message
+	if err := c.MustBindWith(&mess, binding.JSON); err == nil {
 
 		//validate your data here
-		if err := validateTheData(json.TheData); err != nil {
+		if err := validateTheData(mess.TheData); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		newBlock, er := generateBlock(Blockchain[len(Blockchain)-1], json.TheData)
+		newBlock, er := generateBlock(Blockchain[len(Blockchain)-1], mess.TheData)
 		if er != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": er.Error()})
 			return
@@ -42,6 +42,10 @@ func HandleWriteBlock(c *gin.Context) {
 			spew.Dump(Blockchain)
 		}
 		c.JSON(http.StatusCreated, gin.H{"status": "block " + strconv.Itoa(newBlock.Index) + " added"})
+
+		//push it into the channel
+		bcServer <- Blockchain
+
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
