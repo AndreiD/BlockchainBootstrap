@@ -9,12 +9,30 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/AndreiD/BlockchainBootstrap/tools"
 
+	"sync"
 )
 
+//the official blockchain
 var Blockchain []Block
+
+//holding incoming blocks before one is picked winner
+var tempBlocks []Block
+
 var router *gin.Engine
 
 var bcServer chan []Block
+
+// candidateBlocks handles incoming blocks for validation
+var candidateBlocks = make(chan Block)
+
+// announcements broadcasts winning validator to all nodes
+var announcements = make(chan string)
+
+//prevent data races
+var mutex = &sync.Mutex{}
+
+// validators keeps track of open validators and balances
+var validators = make(map[string]int)
 
 func main() {
 
@@ -36,7 +54,7 @@ func main() {
 
 	//Genesis
 	go func() {
-		genesisBlock := Block{0, time.Now().UnixNano(), "genesis", "", ""}
+		genesisBlock := Block{0, time.Now().UnixNano(), "genesis", "", "", ""}
 		spew.Dump(genesisBlock)
 		Blockchain = append(Blockchain, genesisBlock)
 	}()

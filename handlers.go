@@ -31,7 +31,7 @@ func HandleWriteBlock(c *gin.Context) {
 			return
 		}
 
-		newBlock, er := generateBlock(Blockchain[len(Blockchain)-1], mess.TheData)
+		newBlock, er := generateBlock(Blockchain[len(Blockchain)-1], mess.TheData, mess.NodeName)
 		if er != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": er.Error()})
 			return
