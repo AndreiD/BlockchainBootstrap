@@ -17,14 +17,13 @@ func calculateHash(block Block) string {
 }
 
 // generates a new block
-func generateBlock(oldBlock Block, TheData string, address string) (Block, error) {
+func generateBlock(oldBlock Block, TheData string) (Block, error) {
 	var newBlock Block
 	newBlock.Index = oldBlock.Index + 1
 	newBlock.Timestamp = time.Now().UnixNano()
 	newBlock.TheData = TheData
 	newBlock.PrevHash = oldBlock.Hash
 	newBlock.Hash = calculateHash(newBlock)
-	newBlock.Validator = address
 	return newBlock, nil
 }
 

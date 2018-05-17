@@ -31,7 +31,7 @@ func HandleWriteBlock(c *gin.Context) {
 			return
 		}
 
-		newBlock, er := generateBlock(Blockchain[len(Blockchain)-1], mess.TheData, mess.NodeName)
+		newBlock, er := generateBlock(Blockchain[len(Blockchain)-1], mess.TheData)
 		if er != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": er.Error()})
 			return
@@ -43,8 +43,8 @@ func HandleWriteBlock(c *gin.Context) {
 		}
 		c.JSON(http.StatusCreated, gin.H{"status": "block " + strconv.Itoa(newBlock.Index) + " added"})
 
-		//push it into the channel
-		bcServer <- Blockchain
+
+
 
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

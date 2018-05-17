@@ -7,11 +7,9 @@ type Block struct {
 	TheData   string  `json:"thedata"` // <- holding our "data"
 	Hash      string `json:"hash"`
 	PrevHash  string `json:"prevhash"`
-	Validator  string `json:"validator"`
 }
 
 //Data that gets added into the block
 type Message struct {
 	TheData string `json:"thedata"`
-	NodeName string `json:"nodename"`
 }
