@@ -40,3 +40,7 @@ service Blockchain{
   rpc AddBlock(AddBlockRequest) returns (AddBlockResponse){}
   rpc GetBlockchain(GetBlockchainRequest) returns (GetBlockchainResponse){}  // TODO: convert it to stream
 }
+
+
+//TO ADD:
+// GetNetworkID, GetLatestBlock, GetTx, CreateTx, GetTx, GetBalance...
